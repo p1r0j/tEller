@@ -12,6 +12,15 @@ import Handlers.catHandler as CatHandler
 import Handlers.calHandler as CalHandler
 import Handlers.trnHandler as TrnHandler
 console = Console(highlight=False)
+# Faces.
+fEMPTY = " |   |"
+fNEUTRAL = "[[bold cyan]~'_'~[/bold cyan]]"
+fPROMPT = "([bold magenta]~[ ]~[/bold magenta])"
+
+
+# Query set date.
+def query_set_date():
+    CalHandler.process_set_date()
 
 
 # Handle arguments.
