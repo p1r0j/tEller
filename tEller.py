@@ -7,15 +7,12 @@ import string
 import argparse
 from rich.prompt import Prompt
 from rich.console import Console
+import Resources.fmStrings as FmStr
 import Handlers.incHandler as IncHandler
 import Handlers.catHandler as CatHandler
 import Handlers.calHandler as CalHandler
 import Handlers.trnHandler as TrnHandler
 console = Console(highlight=False)
-# Faces.
-fEMPTY = " |   |"
-fNEUTRAL = "[[bold cyan]~'_'~[/bold cyan]]"
-fPROMPT = "([bold magenta]~[ ]~[/bold magenta])"
 
 
 # Query set date.
