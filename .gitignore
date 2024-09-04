@@ -1,2 +1,4 @@
 ide
 __pycache__
+Saves/*
+!Saves/.gitkeep
