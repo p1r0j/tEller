@@ -15,6 +15,11 @@ import Handlers.trnHandler as TrnHandler
 console = Console(highlight=False)
 
 
+# Query add income source.
+def query_add_income_source():
+    IncHandler.process_add_income_source()
+
+
 # Query set date.
 def query_set_date():
     CalHandler.process_set_date()

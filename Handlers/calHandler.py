@@ -25,8 +25,22 @@ if os.path.exists(CALSAVE):
 
 
 # Check date formatting.
-def check_date_formatting(actual, expected):
+def check_for_date_misformatting(actual, expected):
     return (actual.isdigit() and len(actual) == expected)
+
+
+# Check for amount misformatting.
+def check_for_amount_misformatting(which):
+    try:
+        amount = float(which)
+        return False
+    except ValueError:
+        return True
+
+
+# Check for punctuation.
+def check_for_punctuation(which):
+    return any(char in string.punctuation + ' ' for char in which)
 
 
 # Set manual date.
@@ -34,23 +48,26 @@ def set_date_manual():
     global dateDynamic
     console.print(FmStr.fEMPTY)
     year = Prompt.ask(f"{FmStr.fPROMPT} Enter the year (YYYY)")
-    if not check_date_formatting(year, 4):
+    if not check_for_date_misformatting(year, 4):
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} Invalid year.")
     else:
+        console.print(f"{FmStr.fOK}  {year} is valid.")
         console.print(FmStr.fEMPTY)
         month = Prompt.ask(f"{FmStr.fPROMPT} Enter the month (MM)")
-        if not check_date_formatting(month, 2):
+        if not check_for_date_misformatting(month, 2):
             console.print(FmStr.fEMPTY)
             console.print(f"{FmStr.fERROR} Invalid month.")
         else:
+            console.print(f"{FmStr.fOK}  {month} is valid.")
             console.print(FmStr.fEMPTY)
             day = Prompt.ask(f"{FmStr.fPROMPT} Enter the day (DD)")
-            if not check_date_formatting(day, 2):
+            if not check_for_date_misformatting(day, 2):
                 console.print(FmStr.fEMPTY)
                 console.print(f"{FmStr.fERROR} Invalid day.")
             else:
-                console.print(f"{FmStr.fOK}  Recording new date...")
+                console.print(f"{FmStr.fOK}  {day} is valid.")
+                console.print(f"{FmStr.fRECORD}  Recording new date...")
                 dateDynamic = {
                         'Year': year,
                         'Month': month,
@@ -62,7 +79,7 @@ def set_date_manual():
 # Set auto date.
 def set_date_auto():
     global dateDynamic
-    console.print(f"{FmStr.fOK}  Switching to {FmStr.wAUTO} mode...")
+    console.print(f"{FmStr.fRECORD}  Recording new date...")
     dateDynamic = "Auto"
     save_cal()
 
@@ -71,7 +88,7 @@ def set_date_auto():
 def confirm_set_date(which):
     if which == "Manual":
         console.print(FmStr.fEMPTY)
-        console.print(f"{FmStr.fNEUTRAL} The current date is set to {FmStr.wAUTO} mode.")
+        console.print(f"{FmStr.fHEAD} The current date is set to {FmStr.wAUTO} mode.")
         console.print(FmStr.fEMPTY)
         answer = Prompt.ask(f"{FmStr.fPROMPT} Switch to {FmStr.wMANUAL} (Y/n)?")
         if answer.lower() == "n":
@@ -80,7 +97,7 @@ def confirm_set_date(which):
             set_date_manual()
     else:
         console.print(FmStr.fEMPTY)
-        console.print(f"{FmStr.fNEUTRAL} The current date is set to {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
+        console.print(f"{FmStr.fHEAD} The current date is set to {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
         console.print(FmStr.fEMPTY)
         answer = Prompt.ask(f"{FmStr.fPROMPT} Switch to {FmStr.wAUTO} (Y/n)?")
         if answer.lower() == "n":
@@ -103,7 +120,7 @@ def process_set_date():
         confirm_set_date("Auto")
 
 
-# Save CAL.
+# Save date.
 def save_cal():
     with open(CALSAVE, 'wb') as file:
         pickle.dump(dateDynamic, file)
