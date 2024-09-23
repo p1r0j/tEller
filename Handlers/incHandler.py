@@ -61,6 +61,25 @@ def process_add_income_source():
                 record_new_income_source(name, amount)
 
 
+# Process remove income source.
+def process_remove_income_source():
+    global incomeSources
+    import Handlers.calHandler as CalHandler
+    console.print(FmStr.fEMPTY)
+    name = Prompt.ask(f"{FmStr.fPROMPT} Which income source?")
+    if CalHandler.check_for_punctuation(name):
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} Invalid name.")
+    else:
+        if name not in incomeSources:
+            console.print(FmStr.fEMPTY)
+            console.print(f"{FmStr.fERROR} Invalid name.")
+        else:
+            del incomeSources[name]
+            console.print(f"{FmStr.fRECORD}  Removing [bold green]{name}[/bold green]...")
+            save_inc()
+
+
 # Process print income.
 def process_print_income():
     if not incomeSources:

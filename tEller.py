@@ -32,6 +32,11 @@ def query_print_date():
     CalHandler.process_print_date()
 
 
+# Query remove income source.
+def query_remove_income_source():
+    IncHandler.process_remove_income_source()
+
+
 # Query add income source.
 def query_add_income_source():
     IncHandler.process_add_income_source()
@@ -49,6 +54,7 @@ def main():
     parser.add_argument("-i", "--add-income-source", action="store_true", help="add new income source")
     parser.add_argument("-b", "--add-budget-subcategory", action="store_true", help="add new budget subcategory")
     parser.add_argument("-t", "--add-transaction", action="store_true", help="add new transaction")
+    parser.add_argument("-ri", "--remove-income-source", action="store_true", help="remove income source")
     parser.add_argument("-pb", "--print-budget", action="store_true", help="print current budget subcategory")
     parser.add_argument("-pd", "--print-date", action="store_true", help="print current date")
     parser.add_argument("-pi", "--print-income", action="store_true", help="print current income sources")
@@ -64,6 +70,8 @@ def main():
         query_add_budget_subcategory()
     elif args.add_transaction:
         query_add_transaction()
+    elif args.remove_income_source:
+        query_remove_income_source()
     elif args.print_budget:
         query_print_budget()
     elif args.print_date:
