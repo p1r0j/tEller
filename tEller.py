@@ -13,6 +13,13 @@ import Handlers.catHandler as CatHandler
 import Handlers.calHandler as CalHandler
 import Handlers.trnHandler as TrnHandler
 console = Console(highlight=False)
+tEllerVersion = "0.0"
+
+
+# Query version.
+def query_version():
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} v{tEllerVersion}")
 
 
 # Query print income.
@@ -47,6 +54,7 @@ def main():
     parser.add_argument("-pi", "--print-income", action="store_true", help="print current income sources")
     parser.add_argument("-pt", "--print-transactions", action="store_true", help="print current active month's transactions")
     parser.add_argument("-pr", "--print-report", action="store_true", help="print current active month's report")
+    parser.add_argument("-v", "--version", action="store_true", help="print current version")
     args = parser.parse_args()
     if args.set_date:
         query_set_date()
@@ -66,6 +74,8 @@ def main():
         query_print_transactions()
     elif args.print_report:
         query_print_report()
+    elif args.version:
+        query_version()
 
 
 # Call main function.
