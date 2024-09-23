@@ -61,6 +61,19 @@ def process_add_income_source():
                 record_new_income_source(name, amount)
 
 
+# Process print income.
+def process_print_income():
+    if not incomeSources:
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} No income sources found.")
+    else:
+        totalIncome = 0
+        for key, value in incomeSources.items():
+            totalIncome += value
+            console.print(f"{FmStr.fINC}  {key:<10} {value:>10}")
+        console.print(f"{FmStr.fHEAD} {'Total':<10} {totalIncome:>10}")
+
+
 # Save income sources.
 def save_inc():
     with open(INCSAVE, 'wb') as file:

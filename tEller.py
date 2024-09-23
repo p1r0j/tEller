@@ -15,6 +15,11 @@ import Handlers.trnHandler as TrnHandler
 console = Console(highlight=False)
 
 
+# Query print income.
+def query_print_income():
+    IncHandler.process_print_income()
+
+
 # Query print date.
 def query_print_date():
     CalHandler.process_print_date()
