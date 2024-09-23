@@ -120,6 +120,17 @@ def process_set_date():
         confirm_set_date("Auto")
 
 
+# Process print date.
+def process_print_date():
+    console.print(FmStr.fEMPTY)
+    if dateDynamic == "Auto":
+        autoDate = datetime.now()
+        formattedDate = autoDate.strftime("%Y-%m-%d")
+        console.print(f"{FmStr.fHEAD} The current date is {formattedDate}.")
+    else:
+        console.print(f"{FmStr.fHEAD} The current date is set to {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
+
+
 # Save date.
 def save_cal():
     with open(CALSAVE, 'wb') as file:
