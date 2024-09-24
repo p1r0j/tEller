@@ -8,7 +8,9 @@ from rich.prompt import Prompt
 from rich.console import Console
 import Resources.fmStrings as FmStr
 console = Console(highlight=False)
-INCSAVE = 'Saves/incSave.pkl'
+CURD = os.path.dirname(os.path.abspath(__file__))
+INCSAVE = os.path.join(CURD, '../Saves', 'incSave.pkl')
+# INCSAVE = 'Saves/incSave.pkl'
 incomeSources = {}
 
 
@@ -61,6 +63,32 @@ def process_add_income_source():
                 record_new_income_source(name, amount)
 
 
+# Process edit income source.
+def process_edit_income_source():
+    import Handlers.calHandler as CalHandler
+    console.print(FmStr.fEMPTY)
+    name = Prompt.ask(f"{FmStr.fPROMPT} Which income source?")
+    if CalHandler.check_for_punctuation(name):
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} Invalid name.")
+    else:
+        if name not in incomeSources:
+            console.print(FmStr.fEMPTY)
+            console.print(f"{FmStr.fERROR} Invalid name.")
+        else:
+            console.print(FmStr.fEMPTY)
+            newAmount = Prompt.ask(f"{FmStr.fPROMPT} Enter new amount")
+            if CalHandler.check_for_amount_misformatting(newAmount):
+                console.print(FmStr.fEMPTY)
+                console.print(f"{FmStr.fERROR} Invalid amount.")
+            else:
+                console.print(f"{FmStr.fOK}  [bold green]{newAmount}[/bold green] is valid.")
+                console.print(f"{FmStr.fRECORD}  Updating income source...")
+                newAmount = float(newAmount)
+                record_new_income_source(name, newAmount)
+
+
+
 # Process remove income source.
 def process_remove_income_source():
     global incomeSources
@@ -86,9 +114,10 @@ def process_print_income():
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} No income sources found.")
     else:
-        totalIncome = 0
+        totalIncome = 0.0
         for key, value in incomeSources.items():
             totalIncome += value
+            totalIncome = round(totalIncome, 2)
             console.print(f"{FmStr.fINC}  {key:<10} {value:>10}")
         console.print(f"{FmStr.fHEAD} {'Total':<10} {totalIncome:>10}")
 
