@@ -111,7 +111,7 @@ def process_remove_income_source():
 
 
 # Process print income.
-def process_print_income():
+def process_print_income_sources():
     if not incomeSources:
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} No income sources found.")
