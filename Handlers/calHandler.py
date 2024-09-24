@@ -4,6 +4,7 @@
 
 # Components.
 import os
+import pickle
 import string
 from datetime import datetime
 from rich.prompt import Prompt
