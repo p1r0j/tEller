@@ -12,7 +12,8 @@ from rich.console import Console
 import Resources.fmStrings as FmStr
 console = Console(highlight=False)
 # Locations.
-CALSAVE='Saves/calSave.pkl'
+CURD = os.path.dirname(os.path.abspath(__file__))
+CALSAVE = os.path.join(CURD, '../Saves', 'calSave.pkl')
 # Switches.
 dateDynamic = "Auto"
 

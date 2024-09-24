@@ -2,15 +2,17 @@
 # for the offline CLI budgeting tool,
 # tEller.
 
+# Components.
 import os
 import pickle
 from rich.prompt import Prompt
 from rich.console import Console
 import Resources.fmStrings as FmStr
 console = Console(highlight=False)
+# Locations.
 CURD = os.path.dirname(os.path.abspath(__file__))
 INCSAVE = os.path.join(CURD, '../Saves', 'incSave.pkl')
-# INCSAVE = 'Saves/incSave.pkl'
+# Containers.
 incomeSources = {}
 
 

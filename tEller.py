@@ -42,6 +42,11 @@ def query_edit_income_source():
     IncHandler.process_edit_income_source()
 
 
+# Query add budget subcategory.
+def query_add_budget_subcategory():
+    CatHandler.process_add_budget_subcategory()
+
+
 # Query add income source.
 def query_add_income_source():
     IncHandler.process_add_income_source()
