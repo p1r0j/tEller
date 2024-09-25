@@ -69,22 +69,50 @@ def process_add_budget_subcategory():
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} Invalid name.")
     else:
-        console.print(f"{FmStr.fOK}  [bold yellow]{name}[/bold yellow] is valid.")
+        console.print(f"{FmStr.fOK}  {name} is valid.")
         if check_if_budget_subcategory_exists(name):
             console.print(FmStr.fEMPTY)
-            console.print(f"{FmStr.fERROR} [bold yellow]{name}[/bold yellow] already exists.")
+            console.print(f"{FmStr.fERROR} {name} already exists.")
         else:
-            console.print(f"{FmStr.fOK}  [bold yellow]{name}[/bold yellow] is unique.")
+            console.print(f"{FmStr.fOK}  {name} is unique.")
             console.print(FmStr.fEMPTY)
             amount = Prompt.ask(f"{FmStr.fPROMPT} Enter the amount (monthly)")
             if CalHandler.check_for_amount_misformatting(amount):
                 console.print(FmStr.fEMPTY)
                 console.print(f"{FmStr.fERROR} Invalid amount.")
             else:
-                console.print(f"{FmStr.fOK}  [bold yellow]{amount}[/bold yellow] is valid.")
+                console.print(f"{FmStr.fOK}  {amount} is valid.")
                 console.print(f"{FmStr.fRECORD}  Recording new budget subcategory...")
                 amount = float(amount)
                 record_new_budget_subcategory(sCat, name, amount)
+
+
+# Process print budget subcategories.
+def process_print_budget_subcategories():
+    essTotal = 0.0
+    nessTotal = 0.0
+    savTotal = 0.0
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wESSENTIALS}")
+    for subcategory in subCats["Essentials"]:
+        amount = subCats["Essentials"][subcategory]
+        essTotal += amount
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {amount:>10}")
+    console.print(f"{FmStr.fEQUAL}  {'Total':<10} {essTotal:>10}")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wNESSENTIALS}")
+    for subcategory in subCats["Non-Essentials"]:
+        amount = subCats["Non-Essentials"][subcategory]
+        nessTotal += amount
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {amount:>10}")
+    console.print(f"{FmStr.fEQUAL}  {'Total':<10} {nessTotal:>10}")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wSAVDEBT}")
+    for subcategory in subCats["Savings & Debt"]:
+        amount = subCats["Savings & Debt"][subcategory]
+        savTotal += amount
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {amount:>10}")
+    console.print(f"{FmStr.fEQUAL}  {'Total':<10} {savTotal:>10}")
 
 
 # Save budget subcategories.

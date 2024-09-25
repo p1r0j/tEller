@@ -4,6 +4,6 @@ The offline CLI budgeting tool
 
 ## To Do
 
-- [ ] Add print-budget-subcategories.
-
 ## Completed
+
+- [x] Add print-budget-subcategories.

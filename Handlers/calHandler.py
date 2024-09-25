@@ -124,12 +124,13 @@ def process_set_date():
 # Process print date.
 def process_print_date():
     console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wDATE}")
     if dateDynamic == "Auto":
         autoDate = datetime.now()
         formattedDate = autoDate.strftime("%Y-%m-%d")
-        console.print(f"{FmStr.fHEAD} The current date is {formattedDate}.")
+        console.print(f"{FmStr.fEQUAL}  {formattedDate}.")
     else:
-        console.print(f"{FmStr.fHEAD} The current date is set to {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
+        console.print(f"{FmStr.fEQUAL}  {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
 
 
 # Save date.

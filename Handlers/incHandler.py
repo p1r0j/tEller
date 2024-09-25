@@ -47,7 +47,7 @@ def process_add_income_source():
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} Invalid name.")
     else:
-        console.print(f"{FmStr.fOK}  [bold green]{name}[/bold green] is valid.")
+        console.print(f"{FmStr.fOK}  {name} is valid.")
         if check_if_income_source_exists(name):
             console.print(FmStr.fEMPTY)
             console.print(f"{FmStr.fERROR} [bold green]{name}[/bold green] already exists.")
@@ -59,7 +59,7 @@ def process_add_income_source():
                 console.print(FmStr.fEMPTY)
                 console.print(f"{FmStr.fERROR} Invalid amount.")
             else:
-                console.print(f"{FmStr.fOK}  [bold green]{amount}[/bold green] is valid.")
+                console.print(f"{FmStr.fOK}  {amount} is valid.")
                 console.print(f"{FmStr.fRECORD}  Recording new income source...")
                 amount = float(amount)
                 record_new_income_source(name, amount)
@@ -84,7 +84,7 @@ def process_edit_income_source():
                 console.print(FmStr.fEMPTY)
                 console.print(f"{FmStr.fERROR} Invalid amount.")
             else:
-                console.print(f"{FmStr.fOK}  [bold green]{newAmount}[/bold green] is valid.")
+                console.print(f"{FmStr.fOK}  {newAmount} is valid.")
                 console.print(f"{FmStr.fRECORD}  Updating income source...")
                 newAmount = float(newAmount)
                 record_new_income_source(name, newAmount)
@@ -116,12 +116,14 @@ def process_print_income_sources():
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} No income sources found.")
     else:
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fHEAD} {FmStr.wINC}")
         totalIncome = 0.0
         for key, value in incomeSources.items():
             totalIncome += value
             totalIncome = round(totalIncome, 2)
-            console.print(f"{FmStr.fINC}  {key:<10} {value:>10}")
-        console.print(f"{FmStr.fHEAD} {'Total':<10} {totalIncome:>10}")
+            console.print(f"{FmStr.fPLUS}  {key:<10} {value:>10}")
+        console.print(f"{FmStr.fEQUAL}  {'Total':<10} {totalIncome:>10}")
 
 
 # Save income sources.

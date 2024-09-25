@@ -22,6 +22,11 @@ def query_version():
     console.print(f"{FmStr.fHEAD} v{tEllerVersion}")
 
 
+# Query print budget subcategories.
+def query_print_budget_subcategories():
+    CatHandler.process_print_budget_subcategories()
+
+
 # Query print income.
 def query_print_income_sources():
     IncHandler.process_print_income_sources()
@@ -66,9 +71,9 @@ def main():
     parser.add_argument("-t", "--add-transaction", action="store_true", help="add new transaction")
     parser.add_argument("-ei", "--edit-income-source", action="store_true", help="edit income source")
     parser.add_argument("-ri", "--remove-income-source", action="store_true", help="remove income source")
-    parser.add_argument("-pb", "--print-budget-subcategories", action="store_true", help="print current budget subcategories")
     parser.add_argument("-pd", "--print-date", action="store_true", help="print current date")
     parser.add_argument("-pi", "--print-income-sources", action="store_true", help="print current income sources")
+    parser.add_argument("-pb", "--print-budget-subcategories", action="store_true", help="print current budget subcategories")
     parser.add_argument("-pt", "--print-transactions", action="store_true", help="print current active month's transactions")
     parser.add_argument("-pr", "--print-report", action="store_true", help="print current active month's report")
     parser.add_argument("-v", "--version", action="store_true", help="print current version")
@@ -85,12 +90,12 @@ def main():
         query_edit_income_source()
     elif args.remove_income_source:
         query_remove_income_source()
-    elif args.print_budget_subcategories:
-        query_print_budget_subcategories()
     elif args.print_date:
         query_print_date()
     elif args.print_income_sources:
         query_print_income_sources()
+    elif args.print_budget_subcategories:
+        query_print_budget_subcategories()
     elif args.print_transactions:
         query_print_transactions()
     elif args.print_report:
