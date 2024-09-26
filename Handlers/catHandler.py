@@ -110,14 +110,6 @@ def process_remove_budget_subcategory():
             console.print(f"{FmStr.fRECORD}  Removing [bold yellow]{name}[/bold yellow]...")
             save_cat()
 
-        # if name not in subCats:
-            # console.print(FmStr.fEMPTY)
-            # console.print(f"{FmStr.fERROR} Invalid name.")
-        # else:
-            # del subCats["Essentials"][name]
-            # console.print(f"{FmStr.fRECORD}  Removing [bold yellow]{name}[/bold yellow]...")
-            # save_cat()
-
 
 # Process print budget subcategories.
 def process_print_budget_subcategories():
