@@ -87,6 +87,38 @@ def process_add_budget_subcategory():
                 record_new_budget_subcategory(sCat, name, amount)
 
 
+# Process remove budget subcategory.
+def process_remove_budget_subcategory():
+    global subCats
+    import Handlers.calHandler as CalHandler
+    console.print(FmStr.fEMPTY)
+    name = Prompt.ask(f"{FmStr.fPROMPT} Which budget subcategory?")
+    if CalHandler.check_for_punctuation(name):
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} Invalid name.")
+    else:
+        found = None
+        for category in ["Essentials", "Non-Essentials", "Savings & Debt"]:
+            if name in subCats.get(category, {}):
+                found = category
+                break
+        if not found:
+            console.print(FmStr.fEMPTY)
+            console.print(f"{FmStr.fERROR} Invalid name.")
+        else:
+            del subCats[found][name]
+            console.print(f"{FmStr.fRECORD}  Removing [bold yellow]{name}[/bold yellow]...")
+            save_cat()
+
+        # if name not in subCats:
+            # console.print(FmStr.fEMPTY)
+            # console.print(f"{FmStr.fERROR} Invalid name.")
+        # else:
+            # del subCats["Essentials"][name]
+            # console.print(f"{FmStr.fRECORD}  Removing [bold yellow]{name}[/bold yellow]...")
+            # save_cat()
+
+
 # Process print budget subcategories.
 def process_print_budget_subcategories():
     essTotal = 0.0
