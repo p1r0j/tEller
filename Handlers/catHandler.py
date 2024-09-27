@@ -87,6 +87,37 @@ def process_add_budget_subcategory():
                 record_new_budget_subcategory(sCat, name, amount)
 
 
+# Process edit budget subcategory.
+def process_edit_budget_subcategory():
+    global subCats
+    import Handlers.calHandler as CalHandler
+    console.print(FmStr.fEMPTY)
+    name = Prompt.ask(f"{FmStr.fPROMPT} Which budget subcategory?")
+    if CalHandler.check_for_punctuation(name):
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} Invalid name.")
+    else:
+        found = None
+        for category in ["Essentials", "Non-Essentials", "Savings & Debt"]:
+            if name in subCats.get(category, {}):
+                found = category
+                break
+        if not found:
+            console.print(FmStr.fEMPTY)
+            console.print(f"{FmStr.fERROR} Invalid name.")
+        else:
+            console.print(FmStr.fEMPTY)
+            newAmount = Prompt.ask(f"{FmStr.fPROMPT} Enter new amount")
+            if CalHandler.check_for_amount_misformatting(newAmount):
+                console.print(FmStr.fEMPTY)
+                console.print(f"{FmStr.fERROR} Invalid amount.")
+            else:
+                console.print(f"{FmStr.fOK}  {newAmount} is valid.")
+                console.print(f"{FmStr.fRECORD}  Updating budget subcategory...")
+                newAmount = float(newAmount)
+                record_new_budget_subcategory(found, name, newAmount)
+
+
 # Process remove budget subcategory.
 def process_remove_budget_subcategory():
     global subCats

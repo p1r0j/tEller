@@ -67,6 +67,7 @@ def process_add_income_source():
 
 # Process edit income source.
 def process_edit_income_source():
+    global incomeSources
     import Handlers.calHandler as CalHandler
     console.print(FmStr.fEMPTY)
     name = Prompt.ask(f"{FmStr.fPROMPT} Which income source?")
@@ -88,7 +89,6 @@ def process_edit_income_source():
                 console.print(f"{FmStr.fRECORD}  Updating income source...")
                 newAmount = float(newAmount)
                 record_new_income_source(name, newAmount)
-
 
 
 # Process remove income source.

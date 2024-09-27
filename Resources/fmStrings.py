@@ -15,6 +15,7 @@ fRECORD = " |[cyan]>->[/cyan]|"
 fSEL1 = " |[magenta]  1[/magenta]|"
 fSEL2 = " |[magenta]  2[/magenta]|"
 fSEL3 = " |[magenta]  3[/magenta]|"
+fESC = "  [red]ESC[/red] "
 # Formatted words.
 wTELLER = "[bold cyan]tEller[/bold cyan]"
 wDATE = "[bold blue]Active Date[/bold blue]"

@@ -47,6 +47,11 @@ def query_remove_income_source():
     IncHandler.process_remove_income_source()
 
 
+# Query edit budget subcategory.
+def query_edit_budget_subcategory():
+    CatHandler.process_edit_budget_subcategory()
+
+
 # Query edit income source.
 def query_edit_income_source():
     IncHandler.process_edit_income_source()
@@ -76,6 +81,7 @@ def main():
         parser.add_argument("-b", "--add-budget-subcategory", action="store_true", help="add new budget subcategory")
         parser.add_argument("-t", "--add-transaction", action="store_true", help="add new transaction")
         parser.add_argument("-ei", "--edit-income-source", action="store_true", help="edit income source")
+        parser.add_argument("-eb", "--edit-budget-subcategory", action="store_true", help="edit budget subcategory")
         parser.add_argument("-ri", "--remove-income-source", action="store_true", help="remove income source")
         parser.add_argument("-rb", "--remove-budget-subcategory", action="store_true", help="remove budget subcategory")
         parser.add_argument("-pd", "--print-date", action="store_true", help="print current date")
@@ -95,6 +101,8 @@ def main():
             query_add_transaction()
         elif args.edit_income_source:
             query_edit_income_source()
+        elif args.edit_budget_subcategory:
+            query_edit_budget_subcategory()
         elif args.remove_income_source:
             query_remove_income_source()
         elif args.remove_budget_subcategory:
@@ -112,7 +120,7 @@ def main():
         elif args.version:
             query_version()
     except:
-        print("")
+        console.print(FmStr.fESC)
 
 
 # Call main function.
