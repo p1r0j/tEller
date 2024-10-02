@@ -142,6 +142,28 @@ def process_print_date():
         console.print(f"{FmStr.fEQUAL}  {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
 
 
+# Process print report.
+def process_print_report():
+    import Handlers.incHandler as IncHandler
+    import Handlers.catHandler as CatHandler
+    IncHandler.process_print_income_sources()
+    incTotal = IncHandler.get_income_total()
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wBUDGET}")
+    essTotal, nessTotal, savTotal = CatHandler.get_budget_category_totals()
+    catTotal = essTotal + nessTotal + savTotal
+    if catTotal > 0:
+        essPer = round((essTotal / catTotal) * 100, 2)
+        nessPer = round((nessTotal / catTotal) * 100, 2)
+        savPer = round((savTotal / catTotal) * 100, 2)
+    else:
+        essPer = nessPer = savPer = 0
+    console.print(f"{FmStr.fPLUS}  {'Essentials':<21} {essTotal:<10} {essPer}%")
+    console.print(f"{FmStr.fPLUS}  {'Non-Essentials':<21} {nessTotal:<10} {nessPer}%")
+    console.print(f"{FmStr.fPLUS}  {'Savings & Debt':<21} {savTotal:<10} {savPer}%")
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<21} {catTotal:<10}[/bold]")
+
+
 # Save date.
 def save_cal():
     with open(CALSAVE, 'wb') as file:

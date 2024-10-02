@@ -23,6 +23,15 @@ if os.path.exists(INCSAVE):
         incomeSources = incLoad
 
 
+# Get income total.
+def get_income_total():
+    total = 0.0
+    for key, value in incomeSources.items():
+        total += value
+        total = round(total, 2)
+    return total
+
+
 # Record new income source.
 def record_new_income_source(name, amount):
     global incomeSources
