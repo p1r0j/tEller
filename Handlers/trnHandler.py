@@ -118,7 +118,6 @@ def process_edit_transaction():
             console.print(f"{FmStr.fERROR} Invalid name.")
         else:
             console.print(FmStr.fEMPTY)
-
             newAmount = Prompt.ask(f"{FmStr.fPROMPT} Enter new amount")
             if CalHandler.check_for_amount_misformatting(newAmount):
                 console.print(FmStr.fEMPTY)
@@ -134,6 +133,38 @@ def process_edit_transaction():
                     console.print(f"{FmStr.fRECORD}  Updating transaction...")
                     newAmount = float(newAmount)
                     record_new_transaction(year, month, found, name, newAmount, newSubcat)
+
+
+# Process remove transaction.
+def process_remove_transaction():
+    global transactions
+    import Handlers.catHandler as CatHandler
+    import Handlers.calHandler as CalHandler
+    from Handlers.calHandler import dateDynamic
+    if dateDynamic == "Auto":
+        year, month, day = CalHandler.get_auto_date()
+    else:
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
+    console.print(FmStr.fEMPTY)
+    name = Prompt.ask(f"{FmStr.fPROMPT} Which transaction?")
+    if CalHandler.check_for_punctuation(name):
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} Invalid name.")
+    else:
+        found = None
+        for date in transactions[year][month]:
+            if name in transactions[year][month][date]:
+                found = date
+                break
+        if not found:
+            console.print(FmStr.fEMPTY)
+            console.print(f"{FmStr.fERROR} Invalid name.")
+        else:
+            del transactions[year][month][found][name]
+            console.print(f"{FmStr.fRECORD}  Removing [bold red]{name}[/bold red]...")
+            save_trn()
 
 
 # Process print transactions.

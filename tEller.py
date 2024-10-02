@@ -42,6 +42,11 @@ def query_print_date():
     CalHandler.process_print_date()
 
 
+# Query remove transaction.
+def query_remove_transaction():
+    TrnHandler.process_remove_transaction()
+
+
 # Query remove budget subcategory.
 def query_remove_budget_subcategory():
     CatHandler.process_remove_budget_subcategory()
@@ -100,6 +105,7 @@ def main():
         parser.add_argument("-et", "--edit-transaction", action="store_true", help="edit transaction")
         parser.add_argument("-ri", "--remove-income-source", action="store_true", help="remove income source")
         parser.add_argument("-rb", "--remove-budget-subcategory", action="store_true", help="remove budget subcategory")
+        parser.add_argument("-rt", "--remove-transaction", action="store_true", help="remove transaction")
         parser.add_argument("-pd", "--print-date", action="store_true", help="print current date")
         parser.add_argument("-pi", "--print-income-sources", action="store_true", help="print current income sources")
         parser.add_argument("-pb", "--print-budget-subcategories", action="store_true", help="print current budget subcategories")
@@ -125,6 +131,8 @@ def main():
             query_remove_income_source()
         elif args.remove_budget_subcategory:
             query_remove_budget_subcategory()
+        elif args.remove_transaction:
+            query_remove_transaction()
         elif args.print_date:
             query_print_date()
         elif args.print_income_sources:
