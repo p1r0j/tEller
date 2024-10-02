@@ -27,16 +27,18 @@ if os.path.exists(CATSAVE):
         subCats = catLoad
 
 
+# Record new budget subcategory.
 def record_new_budget_subcategory(category, name, amount):
     global subCats
     subCats[category][name] = amount
     save_cat()
 
 
+# Check if budget subcategory exists.
 def check_if_budget_subcategory_exists(which):
-    for category in subCats.values():
-        if which in category:
-            return True
+    for category_name, category_dict in subCats.items():
+        if which in category_dict:
+            return category_name
     return False
 
 

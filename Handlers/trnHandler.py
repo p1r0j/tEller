@@ -25,36 +25,23 @@ if os.path.exists(TRNSAVE):
 
 
 # Record new transaction.
-def record_new_transaction(name, amount):
+def record_new_transaction(year, month, day, name, amount, subcategory):
     global transactions
-    import Handlers.calHandler as CalHandler
-    from Handlers.calHandler import dateDynamic
-    if dateDynamic == "Auto":
-        year, month, day = CalHandler.get_auto_date()
-    else:
-        year = dateDynamic['Year']
-        month = dateDynamic['Month']
-        day = dateDynamic['Day']
     if year not in transactions:
         transactions[year] = {}
     if month not in transactions[year]:
         transactions[year][month] = {}
     if day not in transactions[year][month]:
         transactions[year][month][day] = {}
-    transactions[year][month][day][name] = amount
+    transactions[year][month][day][name] = {
+            'Amount': amount,
+            'Subcategory': subcategory
+            }
     save_trn()
 
 
 # Check if transaction exists.
-def check_if_transaction_exists(which):
-    import Handlers.calHandler as CalHandler
-    from Handlers.calHandler import dateDynamic
-    if dateDynamic == "Auto":
-        year, month, day = CalHandler.get_auto_date()
-    else:
-        year = dateDynamic['Year']
-        month = dateDynamic['Month']
-        day = dateDynamic['Day']
+def check_if_transaction_exists(which, year, month, day):
     todaysTransactions = transactions.get(year, {}).get(month, {}).get (day, {})
     if todaysTransactions is not None and which in todaysTransactions:
         return True
@@ -64,8 +51,15 @@ def check_if_transaction_exists(which):
 
 # Process add transaction.
 def process_add_transaction():
-    print(transactions)
+    import Handlers.catHandler as CatHandler
     import Handlers.calHandler as CalHandler
+    from Handlers.calHandler import dateDynamic
+    if dateDynamic == "Auto":
+        year, month, day = CalHandler.get_auto_date()
+    else:
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
     console.print(FmStr.fEMPTY)
     name = Prompt.ask(f"{FmStr.fPROMPT} Enter the name (no spaces/special characters)")
     if CalHandler.check_for_punctuation(name):
@@ -73,7 +67,7 @@ def process_add_transaction():
         console.print(f"{FmStr.fERROR} Invalid name.")
     else:
         console.print(f"{FmStr.fOK}  [bold red]{name}[/bold red] is valid.")
-        if check_if_transaction_exists(name):
+        if check_if_transaction_exists(name, year, month, day):
             console.print(FmStr.fEMPTY)
             console.print(f"{FmStr.fERROR} [bold red]{name}[/bold red] already exists.")
         else:
@@ -85,16 +79,72 @@ def process_add_transaction():
                 console.print(f"{FmStr.fERROR} Invalid amount.")
             else:
                 console.print(f"{FmStr.fOK}  {amount} is valid.")
-                console.print(f"{FmStr.fRECORD}  Recording new transaction...")
-                amount = float(amount)
-                record_new_transaction(name, amount)
+                console.print(FmStr.fEMPTY)
+                subcat = Prompt.ask(f"{FmStr.fPROMPT} Enter the budget subcategory")
+                if not CatHandler.check_if_budget_subcategory_exists(subcat):
+                    console.print(FmStr.fEMPTY)
+                    console.print(f"{FmStr.fERROR} Invalid budget subcategory.")
+                else:
+                    console.print(f"{FmStr.fRECORD}  Recording new transaction...")
+                    amount = float(amount)
+                    record_new_transaction(year, month, day, name, amount, subcat)
+
+
+# Process edit transaction.
+def process_edit_transaction():
+    global transactions
+    import Handlers.catHandler as CatHandler
+    import Handlers.calHandler as CalHandler
+    from Handlers.calHandler import dateDynamic
+    if dateDynamic == "Auto":
+        year, month, day = CalHandler.get_auto_date()
+    else:
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
+    console.print(FmStr.fEMPTY)
+    name = Prompt.ask(f"{FmStr.fPROMPT} Which transaction?")
+    if CalHandler.check_for_punctuation(name):
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} Invalid name.")
+    else:
+        found = None
+        for date in transactions[year][month]:
+            if name in transactions[year][month][date]:
+                found = date
+                break
+        if not found:
+            console.print(FmStr.fEMPTY)
+            console.print(f"{FmStr.fERROR} Invalid name.")
+        else:
+            console.print(FmStr.fEMPTY)
+
+            newAmount = Prompt.ask(f"{FmStr.fPROMPT} Enter new amount")
+            if CalHandler.check_for_amount_misformatting(newAmount):
+                console.print(FmStr.fEMPTY)
+                console.print(f"{FmStr.fERROR} Invalid amount.")
+            else:
+                console.print(f"{FmStr.fOK}  {newAmount} is valid.")
+                console.print(FmStr.fEMPTY)
+                newSubcat = Prompt.ask(f"{FmStr.fPROMPT} Enter new budget subcategory")
+                if not CatHandler.check_if_budget_subcategory_exists(newSubcat):
+                    console.print(FmStr.fEMPTY)
+                    console.print(f"{FmStr.fERROR} Invalid budget subcategory.")
+                else:
+                    console.print(f"{FmStr.fRECORD}  Updating transaction...")
+                    newAmount = float(newAmount)
+                    record_new_transaction(year, month, found, name, newAmount, newSubcat)
 
 
 # Process print transactions.
 def process_print_transactions():
+    import Handlers.catHandler as CatHandler
     import Handlers.calHandler as CalHandler
     from Handlers.calHandler import dateDynamic
     total = 0.0
+    essTotal = 0.0
+    nessTotal = 0.0
+    savTotal = 0.0
     if dateDynamic == "Auto":
         year, month, day = CalHandler.get_auto_date()
     else:
@@ -108,14 +158,31 @@ def process_print_transactions():
     if month not in transactions[year]:
         console.print(f"{FmStr.fERROR} No records for month {month}.")
         exit()
-    console.print(f"{FmStr.fHEAD} {FmStr.wTRANS}")
+    console.print(f"{FmStr.fHEAD} {FmStr.wTRANS} (Monthly)")
     for date in transactions[year][month]:
         for transaction in transactions[year][month][date]:
             name = transaction
-            amount = transactions[year][month][date][transaction]
+            amount = transactions[year][month][date][transaction]["Amount"]
+            subcategory = transactions[year][month][date][transaction]["Subcategory"]
+            category = CatHandler.check_if_budget_subcategory_exists(subcategory)
             total += amount
-            console.print(f"{FmStr.fPLUS}  {month}-{date}      {amount:<10} {name:<10}")
+            if category == "Essentials":
+                essTotal += amount
+            elif category == "Non-Essentials":
+                nessTotal += amount
+            elif category == "Savings & Debt":
+                savTotal += amount
+            else:
+                console.print(f"{FmStr.fNOK}  [bold red]{name}[/bold red]'s budget subcategory has been changed or removed.")
+            console.print(f"{FmStr.fPLUS}  {month}-{date}      {amount:<10} {name:<10} {subcategory:<10} {category:<10}")
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {total:<10}[/bold]")
+    console.print(FmStr.fEMPTY)
+    categorizedTotal = essTotal + nessTotal + savTotal
+    console.print(f"{FmStr.fHEAD} {FmStr.wTRANS} (Categories)")
+    console.print(f"{FmStr.fPLUS}  {'Essentials':<21} {essTotal:<10}")
+    console.print(f"{FmStr.fPLUS}  {'Non-Essentials':<21} {nessTotal:<10}")
+    console.print(f"{FmStr.fPLUS}  {'Savings & Debt':<21} {savTotal:<10}")
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<21} {categorizedTotal:<10}[/bold]")
 
 
 # Save budget subcategories.

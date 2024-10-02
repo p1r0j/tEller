@@ -62,6 +62,11 @@ def query_edit_income_source():
     IncHandler.process_edit_income_source()
 
 
+# Query edit transaction.
+def query_edit_transaction():
+    TrnHandler.process_edit_transaction()
+
+
 # Query add transaction.
 def query_add_transaction():
     TrnHandler.process_add_transaction()
@@ -92,6 +97,7 @@ def main():
         parser.add_argument("-t", "--add-transaction", action="store_true", help="add new transaction")
         parser.add_argument("-ei", "--edit-income-source", action="store_true", help="edit income source")
         parser.add_argument("-eb", "--edit-budget-subcategory", action="store_true", help="edit budget subcategory")
+        parser.add_argument("-et", "--edit-transaction", action="store_true", help="edit transaction")
         parser.add_argument("-ri", "--remove-income-source", action="store_true", help="remove income source")
         parser.add_argument("-rb", "--remove-budget-subcategory", action="store_true", help="remove budget subcategory")
         parser.add_argument("-pd", "--print-date", action="store_true", help="print current date")
@@ -113,6 +119,8 @@ def main():
             query_edit_income_source()
         elif args.edit_budget_subcategory:
             query_edit_budget_subcategory()
+        elif args.edit_transaction:
+            query_edit_transaction()
         elif args.remove_income_source:
             query_remove_income_source()
         elif args.remove_budget_subcategory:
