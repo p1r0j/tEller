@@ -27,39 +27,35 @@ if os.path.exists(TRNSAVE):
 # Record new transaction.
 def record_new_transaction(name, amount):
     global transactions
+    import Handlers.calHandler as CalHandler
     from Handlers.calHandler import dateDynamic
     if dateDynamic == "Auto":
-        autoDate = datetime.now()
-        activeYear = autoDate.strftime("%Y")
-        activeMonth = autoDate.strftime("%m")
-        activeDay = autoDate.strftime("%d")
+        year, month, day = CalHandler.get_auto_date()
     else:
-        activeYear = dateDynamic['Year']
-        activeMonth = dateDynamic['Month']
-        activeDay = dateDynamic['Day']
-    if activeYear not in transactions:
-        transactions[activeYear] = {}
-    if activeMonth not in transactions[activeYear]:
-        transactions[activeYear][activeMonth] = {}
-    if activeDay not in transactions[activeYear][activeMonth]:
-        transactions[activeYear][activeMonth][activeDay] = {}
-    transactions[activeYear][activeMonth][activeDay][name] = amount
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
+    if year not in transactions:
+        transactions[year] = {}
+    if month not in transactions[year]:
+        transactions[year][month] = {}
+    if day not in transactions[year][month]:
+        transactions[year][month][day] = {}
+    transactions[year][month][day][name] = amount
     save_trn()
 
 
 # Check if transaction exists.
 def check_if_transaction_exists(which):
+    import Handlers.calHandler as CalHandler
     from Handlers.calHandler import dateDynamic
     if dateDynamic == "Auto":
-        autoDate = datetime.now()
-        activeYear = autoDate.strftime("%Y")
-        activeMonth = autoDate.strftime("%m")
-        activeDay = autoDate.strftime("%d")
+        year, month, day = CalHandler.get_auto_date()
     else:
-        activeYear = dateDynamic['Year']
-        activeMonth = dateDynamic['Month']
-        activeDay = dateDynamic['Day']
-    todaysTransactions = transactions.get(activeYear, {}).get(activeMonth, {}).get (activeDay, {})
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
+    todaysTransactions = transactions.get(year, {}).get(month, {}).get (day, {})
     if todaysTransactions is not None and which in todaysTransactions:
         return True
     else:
@@ -68,6 +64,7 @@ def check_if_transaction_exists(which):
 
 # Process add transaction.
 def process_add_transaction():
+    print(transactions)
     import Handlers.calHandler as CalHandler
     console.print(FmStr.fEMPTY)
     name = Prompt.ask(f"{FmStr.fPROMPT} Enter the name (no spaces/special characters)")
@@ -75,7 +72,7 @@ def process_add_transaction():
         console.print(FmStr.fEMPTY)
         console.print(f"{FmStr.fERROR} Invalid name.")
     else:
-        console.print(f"{FmStr.fOK}  {name} is valid.")
+        console.print(f"{FmStr.fOK}  [bold red]{name}[/bold red] is valid.")
         if check_if_transaction_exists(name):
             console.print(FmStr.fEMPTY)
             console.print(f"{FmStr.fERROR} [bold red]{name}[/bold red] already exists.")

@@ -25,6 +25,15 @@ if os.path.exists(CALSAVE):
         dateDynamic = calLoad
 
 
+# Get auto date.
+def get_auto_date():
+    autoDate = datetime.now()
+    year = autoDate.strftime("%Y")
+    month = autoDate.strftime("%m")
+    day = autoDate.strftime("%d")
+    return year, month, day
+
+
 # Check date formatting.
 def check_for_date_misformatting(actual, expected):
     return (actual.isdigit() and len(actual) == expected)
