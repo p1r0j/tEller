@@ -57,6 +57,11 @@ def query_edit_income_source():
     IncHandler.process_edit_income_source()
 
 
+# Query add transaction.
+def query_add_transaction():
+    TrnHandler.process_add_transaction()
+
+
 # Query add budget subcategory.
 def query_add_budget_subcategory():
     CatHandler.process_add_budget_subcategory()
@@ -74,7 +79,7 @@ def query_set_date():
 
 # Handle arguments.
 def main():
-    try:
+    # try:
         parser = argparse.ArgumentParser(description="tEller, the offline CLI budgeting tool.")
         parser.add_argument("-d", "--set-date", action="store_true", help="set current date")
         parser.add_argument("-i", "--add-income-source", action="store_true", help="add new income source")
@@ -119,8 +124,8 @@ def main():
             query_print_report()
         elif args.version:
             query_version()
-    except:
-        console.print(FmStr.fESC)
+    # except:
+        # console.print(FmStr.fESC)
 
 
 # Call main function.
