@@ -4,8 +4,6 @@ The offline CLI budgeting tool
 
 ## To Do
 
-- [ ] Add remove-transaction.
-
 - [ ] Add print-report.
 
 ## Completed
@@ -31,5 +29,7 @@ The offline CLI budgeting tool
 - [x] Add add-transaction.
 
 - [x] Add edit-transaction.
+
+- [x] Add remove-transaction.
 
 - [x] Add print-transactions.
