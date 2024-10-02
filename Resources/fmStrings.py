@@ -25,4 +25,5 @@ wINC = "[bold green]Income Sources[/bold green]"
 wESSENTIALS = "[bold yellow]Essentials[/bold yellow]"
 wNESSENTIALS = "[bold yellow]Non-Essentials[/bold yellow]"
 wSAVDEBT = "[bold yellow]Savings & Debt[/bold yellow]"
+wTRANS = "[bold red]Transactions[/bold red]"
 

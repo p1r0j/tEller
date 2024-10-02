@@ -122,8 +122,8 @@ def process_print_income_sources():
         for key, value in incomeSources.items():
             totalIncome += value
             totalIncome = round(totalIncome, 2)
-            console.print(f"{FmStr.fPLUS}  {key:<10} {value:>10}")
-        console.print(f"{FmStr.fEQUAL}  {'Total':<10} {totalIncome:>10}")
+            console.print(f"{FmStr.fPLUS}  {key:<10} {value:<10}")
+        console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {totalIncome:<10}[/bold]")
 
 
 # Save income sources.

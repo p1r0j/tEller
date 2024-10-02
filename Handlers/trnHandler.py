@@ -90,6 +90,34 @@ def process_add_transaction():
                 record_new_transaction(name, amount)
 
 
+# Process print transactions.
+def process_print_transactions():
+    import Handlers.calHandler as CalHandler
+    from Handlers.calHandler import dateDynamic
+    total = 0.0
+    if dateDynamic == "Auto":
+        year, month, day = CalHandler.get_auto_date()
+    else:
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
+    console.print(FmStr.fEMPTY)
+    if year not in transactions:
+        console.print(f"{FmStr.fERROR} No records for year {year}.")
+        exit()
+    if month not in transactions[year]:
+        console.print(f"{FmStr.fERROR} No records for month {month}.")
+        exit()
+    console.print(f"{FmStr.fHEAD} {FmStr.wTRANS}")
+    for date in transactions[year][month]:
+        for transaction in transactions[year][month][date]:
+            name = transaction
+            amount = transactions[year][month][date][transaction]
+            total += amount
+            console.print(f"{FmStr.fPLUS}  {month}-{date}      {amount:<10} {name:<10}")
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {total:<10}[/bold]")
+
+
 # Save budget subcategories.
 def save_trn():
     with open(TRNSAVE, 'wb') as file:

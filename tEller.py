@@ -22,6 +22,11 @@ def query_version():
     console.print(f"{FmStr.fHEAD} v{tEllerVersion}")
 
 
+# Query print transactions.
+def query_print_transactions():
+    TrnHandler.process_print_transactions()
+
+
 # Query print budget subcategories.
 def query_print_budget_subcategories():
     CatHandler.process_print_budget_subcategories()
