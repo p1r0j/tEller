@@ -150,6 +150,7 @@ def process_print_report():
     from Handlers.catHandler import subCats
     from Handlers.calHandler import dateDynamic
     from Handlers.trnHandler import transactions
+    process_print_date()
     IncHandler.process_print_income_sources()
     incTotal = IncHandler.get_income_total()
     console.print(FmStr.fEMPTY)
