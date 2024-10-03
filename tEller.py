@@ -22,6 +22,11 @@ def query_version():
     console.print(f"{FmStr.fHEAD} v{tEllerVersion}")
 
 
+# Query print report.
+def query_print_report():
+    CalHandler.process_print_report()
+
+
 # Query print transactions.
 def query_print_transactions():
     TrnHandler.process_print_transactions()

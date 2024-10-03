@@ -189,7 +189,7 @@ def process_print_transactions():
     if month not in transactions[year]:
         console.print(f"{FmStr.fERROR} No records for month {month}.")
         exit()
-    console.print(f"{FmStr.fHEAD} {FmStr.wTRANS} (Monthly)")
+    console.print(f"{FmStr.fHEAD} {FmStr.wMTRANS}")
     for date in transactions[year][month]:
         for transaction in transactions[year][month][date]:
             name = transaction
@@ -206,10 +206,12 @@ def process_print_transactions():
             else:
                 console.print(f"{FmStr.fNOK}  [bold red]{name}[/bold red]'s budget subcategory has been changed or removed.")
             console.print(f"{FmStr.fPLUS}  {month}-{date}      {amount:<10} {name:<10} {subcategory:<10} {category:<10}")
+    total = round(total, 2)
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {total:<10}[/bold]")
     console.print(FmStr.fEMPTY)
     categorizedTotal = essTotal + nessTotal + savTotal
-    console.print(f"{FmStr.fHEAD} {FmStr.wTRANS} (Categories)")
+    categorizedTotal = round(categorizedTotal, 2)
+    console.print(f"{FmStr.fHEAD} {FmStr.wCTRANS}")
     console.print(f"{FmStr.fPLUS}  {'Essentials':<21} {essTotal:<10}")
     console.print(f"{FmStr.fPLUS}  {'Non-Essentials':<21} {nessTotal:<10}")
     console.print(f"{FmStr.fPLUS}  {'Savings & Debt':<21} {savTotal:<10}")

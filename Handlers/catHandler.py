@@ -27,6 +27,20 @@ if os.path.exists(CATSAVE):
         subCats = catLoad
 
 
+# Get budget category totals.
+def get_budget_category_totals():
+    essTotal = 0.0
+    nessTotal = 0.0
+    savTotal = 0.0
+    for subcategory in subCats["Essentials"]:
+        essTotal += subCats["Essentials"][subcategory]
+    for subcategory in subCats["Non-Essentials"]:
+        nessTotal += subCats["Non-Essentials"][subcategory]
+    for subcategory in subCats["Savings & Debt"]:
+        savTotal += subCats["Savings & Debt"][subcategory]
+    return essTotal, nessTotal, savTotal
+
+
 # Record new budget subcategory.
 def record_new_budget_subcategory(category, name, amount):
     global subCats
