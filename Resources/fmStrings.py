@@ -30,4 +30,8 @@ wNESSENTIALS = "[bold yellow]Non-Essentials[/bold yellow]"
 wSAVDEBT = "[bold yellow]Savings & Debt[/bold yellow]"
 wMTRANS = "[bold red]Monthly Transactions[/bold red]"
 wCTRANS = "[bold red]Categorical Transactions[/bold red]"
+<<<<<<< HEAD
+=======
+wSTRANS = "[bold red]Subcategorical Transactions[/bold red]"
+>>>>>>> 5f15cd4bb1dde13c5426de7d5fbdd0c06590552f
 

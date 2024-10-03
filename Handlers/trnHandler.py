@@ -85,6 +85,7 @@ def process_add_transaction():
                     console.print(FmStr.fEMPTY)
                     console.print(f"{FmStr.fERROR} Invalid budget subcategory.")
                 else:
+                    console.print(f"{FmStr.fOK}  {subcat} is valid.")
                     console.print(f"{FmStr.fRECORD}  Recording new transaction...")
                     amount = float(amount)
                     record_new_transaction(year, month, day, name, amount, subcat)
@@ -130,6 +131,7 @@ def process_edit_transaction():
                     console.print(FmStr.fEMPTY)
                     console.print(f"{FmStr.fERROR} Invalid budget subcategory.")
                 else:
+                    console.print(f"{FmStr.fOK}  {newSubcat} is valid.")
                     console.print(f"{FmStr.fRECORD}  Updating transaction...")
                     newAmount = float(newAmount)
                     record_new_transaction(year, month, found, name, newAmount, newSubcat)
@@ -176,6 +178,7 @@ def process_print_transactions():
     essTotal = 0.0
     nessTotal = 0.0
     savTotal = 0.0
+    subTotals = {}
     if dateDynamic == "Auto":
         year, month, day = CalHandler.get_auto_date()
     else:
@@ -199,15 +202,31 @@ def process_print_transactions():
             total += amount
             if category == "Essentials":
                 essTotal += amount
+                essTotal = round(essTotal, 2)
             elif category == "Non-Essentials":
                 nessTotal += amount
+                nessTotal = round(nessTotal, 2)
             elif category == "Savings & Debt":
                 savTotal += amount
+                savTotal = round(savTotal, 2)
             else:
                 console.print(f"{FmStr.fNOK}  [bold red]{name}[/bold red]'s budget subcategory has been changed or removed.")
+            if subcategory not in subTotals:
+                subTotals[subcategory] = 0.0
+            subTotals[subcategory] += amount
             console.print(f"{FmStr.fPLUS}  {month}-{date}      {amount:<10} {name:<10} {subcategory:<10} {category:<10}")
     total = round(total, 2)
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {total:<10}[/bold]")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wSTRANS}")
+    scategorizedTotal = 0.0
+    for subcategory, sub_total in subTotals.items():
+        category = CatHandler.check_if_budget_subcategory_exists(subcategory)
+        sub_total = round(sub_total, 2)
+        scategorizedTotal += sub_total
+        scategorizedTotal = round(scategorizedTotal, 2)
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {sub_total:<10} {category:<10}")
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {scategorizedTotal:<10}[/bold]")
     console.print(FmStr.fEMPTY)
     categorizedTotal = essTotal + nessTotal + savTotal
     categorizedTotal = round(categorizedTotal, 2)
