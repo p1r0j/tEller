@@ -146,13 +146,17 @@ def process_print_date():
 def process_print_report():
     import Handlers.incHandler as IncHandler
     import Handlers.catHandler as CatHandler
+    import Handlers.calHandler as CalHandler
     from Handlers.catHandler import subCats
+    from Handlers.calHandler import dateDynamic
+    from Handlers.trnHandler import transactions
     IncHandler.process_print_income_sources()
     incTotal = IncHandler.get_income_total()
     console.print(FmStr.fEMPTY)
     console.print(f"{FmStr.fHEAD} {FmStr.wBUDGET}")
     essTotal, nessTotal, savTotal = CatHandler.get_budget_category_totals()
     catTotal = essTotal + nessTotal + savTotal
+    catTotal = round(catTotal, 2)
     if catTotal > 0:
         essPer = round((essTotal / catTotal) * 100, 2)
         nessPer = round((nessTotal / catTotal) * 100, 2)
@@ -178,6 +182,79 @@ def process_print_report():
         budget = subCats["Savings & Debt"][subcategory]
         scatTotal += budget
         console.print(f"{FmStr.fPLUS}  {subcategory:<10} {budget:<10} {'Savings & Debt':<10}")
+    scatTotal = round(scatTotal, 2)
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {scatTotal:<10}[/bold]")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wSTRANS}")
+    trnTotal = 0.0
+    etrnTotal = 0.0
+    ntrnTotal = 0.0
+    sdtrnTotal = 0.0
+    strnTotal = 0.0
+    strnTotals = {}
+    if dateDynamic == "Auto":
+        year, month, day = CalHandler.get_auto_date()
+    else:
+        year = dateDynamic['Year']
+        month = dateDynamic['Month']
+        day = dateDynamic['Day']
+    if year not in transactions:
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} No records for year {year}.")
+        exit()
+    if month not in transactions[year]:
+        console.print(FmStr.fEMPTY)
+        console.print(f"{FmStr.fERROR} No records for month {month}.")
+        exit()
+    for date in transactions[year][month]:
+        for transaction in transactions[year][month][date]:
+            name = transaction
+            amount = transactions[year][month][date][transaction]["Amount"]
+            subcategory = transactions[year][month][date][transaction]["Subcategory"]
+            category = CatHandler.check_if_budget_subcategory_exists(subcategory)
+            trnTotal += amount
+            if category == "Essentials":
+                etrnTotal += amount
+                etrnTotal = round(etrnTotal, 2)
+            elif category == "Non-Essentials":
+                ntrnTotal += amount
+                ntrnTotal = round(ntrnTotal, 2)
+            elif category == "Savings & Debt":
+                sdtrnTotal += amount
+                sdtrnTotal = round(sdtrnTotal, 2)
+            else:
+                console.print(f"{FmStr.fNOK}  [bold red]{name}[/bold red]'s budget subcategory has been changed or removed.")
+            if subcategory not in strnTotals:
+                strnTotals[subcategory] = 0.0
+            strnTotals[subcategory] += amount
+    trnTotal = round(trnTotal, 2)
+    for subcategory, sub_total in strnTotals.items():
+        category = CatHandler.check_if_budget_subcategory_exists(subcategory)
+        sub_total = round(sub_total, 2)
+        strnTotal += sub_total
+        strnTotal = round(strnTotal, 2)
+        strnBud = subCats[category][subcategory]
+        sub_per = round((sub_total / strnBud) * 100, 2)
+        console.print(f"{FmStr.fMINUS}  {subcategory:<10} {sub_total:<10} {sub_per}%")
+    strnPer = round((strnTotal / scatTotal) * 100, 2)
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {strnTotal:<10} {strnPer}%[/bold]")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wCTRANS}")
+    etrnPer = round((etrnTotal / essTotal) * 100, 2)
+    ntrnPer = round((ntrnTotal / nessTotal) * 100, 2)
+    sdtrnPer = round((sdtrnTotal / savTotal) * 100, 2)
+    trnPer = round ((trnTotal / catTotal) * 100, 2)
+    console.print(f"{FmStr.fMINUS}  {'Essentials':<21} {etrnTotal:<10} {etrnPer}%")
+    console.print(f"{FmStr.fMINUS}  {'Non-Essentials':<21} {ntrnTotal:<10} {ntrnPer}%")
+    console.print(f"{FmStr.fMINUS}  {'Savings & Debt':<21} {sdtrnTotal:<10} {sdtrnPer}%")
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<21} {trnTotal:<10} {trnPer}%[/bold]")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wNET}")
+    netDiff = round((incTotal - trnTotal), 2)
+    netPer = round((trnTotal / incTotal) * 100, 2)
+    console.print(f"{FmStr.fPLUS}  {'Income':<10} {incTotal:<10}")
+    console.print(f"{FmStr.fMINUS}  {'Expenses':<10} {trnTotal:<10}")
+    console.print(f"{FmStr.fEQUAL}  [bold]{'Diff':<10} {netDiff:<10} {netPer}%[/bold]")
 
 
 # Save date.

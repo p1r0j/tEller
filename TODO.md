@@ -4,8 +4,6 @@ The offline CLI budgeting tool
 
 ## To Do
 
-- [ ] Add print-report.
-
 ## Completed
 
 - [x] Add set-date.
@@ -33,3 +31,5 @@ The offline CLI budgeting tool
 - [x] Add remove-transaction.
 
 - [x] Add print-transactions.
+
+- [x] Add print-report.

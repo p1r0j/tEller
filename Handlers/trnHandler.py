@@ -214,7 +214,7 @@ def process_print_transactions():
             if subcategory not in subTotals:
                 subTotals[subcategory] = 0.0
             subTotals[subcategory] += amount
-            console.print(f"{FmStr.fPLUS}  {month}-{date}      {amount:<10} {name:<10} {subcategory:<10} {category:<10}")
+            console.print(f"{FmStr.fMINUS}  {month}-{date}      {amount:<10} {name:<10} {subcategory:<10} {category:<10}")
     total = round(total, 2)
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {total:<10}[/bold]")
     console.print(FmStr.fEMPTY)
@@ -225,15 +225,15 @@ def process_print_transactions():
         sub_total = round(sub_total, 2)
         scategorizedTotal += sub_total
         scategorizedTotal = round(scategorizedTotal, 2)
-        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {sub_total:<10} {category:<10}")
+        console.print(f"{FmStr.fMINUS}  {subcategory:<10} {sub_total:<10} {category:<10}")
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {scategorizedTotal:<10}[/bold]")
     console.print(FmStr.fEMPTY)
     categorizedTotal = essTotal + nessTotal + savTotal
     categorizedTotal = round(categorizedTotal, 2)
     console.print(f"{FmStr.fHEAD} {FmStr.wCTRANS}")
-    console.print(f"{FmStr.fPLUS}  {'Essentials':<21} {essTotal:<10}")
-    console.print(f"{FmStr.fPLUS}  {'Non-Essentials':<21} {nessTotal:<10}")
-    console.print(f"{FmStr.fPLUS}  {'Savings & Debt':<21} {savTotal:<10}")
+    console.print(f"{FmStr.fMINUS}  {'Essentials':<21} {essTotal:<10}")
+    console.print(f"{FmStr.fMINUS}  {'Non-Essentials':<21} {nessTotal:<10}")
+    console.print(f"{FmStr.fMINUS}  {'Savings & Debt':<21} {savTotal:<10}")
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<21} {categorizedTotal:<10}[/bold]")
 
 

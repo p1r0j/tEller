@@ -32,4 +32,5 @@ wSCAT = "[bold yellow]Budget Subcategories[/bold yellow]"
 wMTRANS = "[bold red]Monthly Transactions[/bold red]"
 wCTRANS = "[bold red]Categorical Transactions[/bold red]"
 wSTRANS = "[bold red]Subcategorical Transactions[/bold red]"
+wNET = "[bold cyan]Net Value[/bold cyan]"
 
