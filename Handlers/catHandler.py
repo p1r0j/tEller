@@ -38,6 +38,9 @@ def get_budget_category_totals():
         nessTotal += subCats["Non-Essentials"][subcategory]
     for subcategory in subCats["Savings & Debt"]:
         savTotal += subCats["Savings & Debt"][subcategory]
+    essTotal = round(essTotal, 2)
+    nessTotal = round(nessTotal, 2)
+    savTotal = round(savTotal, 2)
     return essTotal, nessTotal, savTotal
 
 
