@@ -146,6 +146,7 @@ def process_print_date():
 def process_print_report():
     import Handlers.incHandler as IncHandler
     import Handlers.catHandler as CatHandler
+    from Handlers.catHandler import subCats
     IncHandler.process_print_income_sources()
     incTotal = IncHandler.get_income_total()
     console.print(FmStr.fEMPTY)
@@ -162,6 +163,21 @@ def process_print_report():
     console.print(f"{FmStr.fPLUS}  {'Non-Essentials':<21} {nessTotal:<10} {nessPer}%")
     console.print(f"{FmStr.fPLUS}  {'Savings & Debt':<21} {savTotal:<10} {savPer}%")
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<21} {catTotal:<10}[/bold]")
+    console.print(FmStr.fEMPTY)
+    console.print(f"{FmStr.fHEAD} {FmStr.wSCAT}")
+    scatTotal = 0.0
+    for subcategory in subCats["Essentials"]:
+        budget = subCats["Essentials"][subcategory]
+        scatTotal += budget
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {budget:<10} {'Essentials':<10}")
+    for subcategory in subCats["Non-Essentials"]:
+        budget = subCats["Non-Essentials"][subcategory]
+        scatTotal += budget
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {budget:<10} {'Non-Essentials':<10}")
+    for subcategory in subCats["Savings & Debt"]:
+        budget = subCats["Savings & Debt"][subcategory]
+        scatTotal += budget
+        console.print(f"{FmStr.fPLUS}  {subcategory:<10} {budget:<10} {'Savings & Debt':<10}")
 
 
 # Save date.
