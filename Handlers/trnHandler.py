@@ -193,7 +193,8 @@ def process_print_transactions():
         console.print(f"{FmStr.fERROR} No records for month {month}.")
         exit()
     console.print(f"{FmStr.fHEAD} {FmStr.wMTRANS}")
-    for date in transactions[year][month]:
+    for date in sorted(transactions[year][month], key=int):
+    # for date in transactions[year][month]:
         for transaction in transactions[year][month][date]:
             name = transaction
             amount = transactions[year][month][date][transaction]["Amount"]
