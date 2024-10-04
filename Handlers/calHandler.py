@@ -235,7 +235,10 @@ def process_print_report():
         strnTotal += sub_total
         strnTotal = round(strnTotal, 2)
         strnBud = subCats[category][subcategory]
-        sub_per = round((sub_total / strnBud) * 100, 2)
+        if strnBud > 0.0:
+            sub_per = round((sub_total / strnBud) * 100, 2)
+        else:
+            sub_per = sub_total
         console.print(f"{FmStr.fMINUS}  {subcategory:<10} {sub_total:<10} {sub_per}%")
     strnPer = round((strnTotal / scatTotal) * 100, 2)
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {strnTotal:<10} {strnPer}%[/bold]")
