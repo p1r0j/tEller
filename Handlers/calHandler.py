@@ -238,7 +238,7 @@ def process_print_report():
         if strnBud > 0.0:
             sub_per = round((sub_total / strnBud) * 100, 2)
         else:
-            sub_per = sub_total
+            sub_per = 100.0 + sub_total
         console.print(f"{FmStr.fMINUS}  {subcategory:<10} {sub_total:<10} {sub_per}%")
     strnPer = round((strnTotal / scatTotal) * 100, 2)
     console.print(f"{FmStr.fEQUAL}  [bold]{'Total':<10} {strnTotal:<10} {strnPer}%[/bold]")
