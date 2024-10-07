@@ -4,6 +4,8 @@ The offline CLI budgeting tool
 
 ## To Do
 
+- [ ] Fix transaction issue with same names on differing dates.
+
 ## Completed
 
 - [x] Add set-date.
