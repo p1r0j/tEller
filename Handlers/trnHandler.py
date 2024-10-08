@@ -41,12 +41,13 @@ def record_new_transaction(year, month, day, name, amount, subcategory):
 
 
 # Check if transaction exists.
-def check_if_transaction_exists(which, year, month, day):
-    todaysTransactions = transactions.get(year, {}).get(month, {}).get (day, {})
-    if todaysTransactions is not None and which in todaysTransactions:
-        return True
-    else:
-        return False
+def check_if_transaction_exists(which, year, month):
+    for day in range(0, 100):
+        day_str = f"{day:02d}"
+        todaysTransactions = transactions.get(year, {}).get(month, {}).get(day_str, {})
+        if todaysTransactions is not None and which in todaysTransactions:
+            return True
+    return False
 
 
 # Process add transaction.
@@ -67,7 +68,7 @@ def process_add_transaction():
         console.print(f"{FmStr.fERROR} Invalid name.")
     else:
         console.print(f"{FmStr.fOK}  [bold red]{name}[/bold red] is valid.")
-        if check_if_transaction_exists(name, year, month, day):
+        if check_if_transaction_exists(name, year, month):
             console.print(FmStr.fEMPTY)
             console.print(f"{FmStr.fERROR} [bold red]{name}[/bold red] already exists.")
         else:

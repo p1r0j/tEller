@@ -4,8 +4,6 @@ The offline CLI budgeting tool
 
 ## To Do
 
-- [ ] Fix transaction issue with same names on differing dates.
-
 ## Completed
 
 - [x] Add set-date.
@@ -35,3 +33,5 @@ The offline CLI budgeting tool
 - [x] Add print-transactions.
 
 - [x] Add print-report.
+
+- [x] Fix transaction issue with same names on differing dates.
