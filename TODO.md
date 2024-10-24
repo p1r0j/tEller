@@ -4,6 +4,8 @@ The offline CLI budgeting tool
 
 ## To Do
 
+- [ ] Add category column to subcategorical transactions section of print-report.
+
 ## Completed
 
 - [x] Add set-date.
