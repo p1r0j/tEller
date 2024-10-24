@@ -137,7 +137,7 @@ def process_print_date():
     if dateDynamic == "Auto":
         autoDate = datetime.now()
         formattedDate = autoDate.strftime("%Y-%m-%d")
-        console.print(f"{FmStr.fEQUAL}  {formattedDate}.")
+        console.print(f"{FmStr.fEQUAL}  {formattedDate}")
     else:
         console.print(f"{FmStr.fEQUAL}  {dateDynamic['Year']}-{dateDynamic['Month']}-{dateDynamic['Day']}.")
 
